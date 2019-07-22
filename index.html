@@ -461,7 +461,6 @@
         var pricee = document.createElement("h5");
         pricee.innerHTML = price;
         body.appendChild(pricee);
-
         var captionn = document.createElement("p");
         captionn.className = "card-text";
         captionn.innerHTML = caption;
@@ -472,17 +471,11 @@
         main_div.appendChild(card);
         document.getElementById("items " + div_id).appendChild(main_div);
       }
-
-      function print(c) {
-        console.log(c);
-      }
       var username = document.getElementById("username");
       var password = document.getElementById("password");
-
       function auth() {
         login_div.style.display = "block";
       }
-
       function check() {
         if (username.value == "admin") {
           if (password.value == "red") {
