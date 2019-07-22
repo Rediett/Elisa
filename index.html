@@ -404,7 +404,7 @@
         snapshot.forEach(function(childSnapshot) {
           var c = childSnapshot.val();
           item.push(c["name"]);
-          if (item.includes(c["name"])) {
+          if (!item.includes(c["name"])) {
             creater(
               c["name"],
               c["image"],
