@@ -311,184 +311,172 @@
     </div>
     <script>
       var firebaseConfig = {
-        apiKey: "AIzaSyCqbzTbuxG5YBUbx1rpJuzEud4SXuxUuJs",
-        authDomain: "elisa-f3588.firebaseapp.com",
-        databaseURL: "https://elisa-f3588.firebaseio.com",
-        projectId: "elisa-f3588",
-        storageBucket: "elisa-f3588.appspot.com",
-        messagingSenderId: "752986424453",
-        appId: "1:752986424453:web:f5f61d0a46695506"
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
+  apiKey: "AIzaSyCqbzTbuxG5YBUbx1rpJuzEud4SXuxUuJs",
+  authDomain: "elisa-f3588.firebaseapp.com",
+  databaseURL: "https://elisa-f3588.firebaseio.com",
+  projectId: "elisa-f3588",
+  storageBucket: "elisa-f3588.appspot.com",
+  messagingSenderId: "752986424453",
+  appId: "1:752986424453:web:f5f61d0a46695506"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
-      //var database = firebase.database();
-      function writeUserData(catagory, name, price, imageUrl, caption) {
-        firebase
-          .database()
-          .ref("Items/" + name)
-          .set({
-            catagory: catagory,
-            name: name,
-            price: price,
-            image: imageUrl,
-            caption: caption
-          });
-      }
-      var home = document.getElementById("home");
-      var men = document.getElementById("men");
-      var women = document.getElementById("women");
-      var kids = document.getElementById("kids");
-      var homebt = document.getElementById("home-bt");
-      var kidsbt = document.getElementById("kids-bt");
-      var menbt = document.getElementById("men-bt");
-      var womenbt = document.getElementById("women-bt");
-      var login_div = document.getElementById("login_div");
-      var upload_div = document.getElementById("upload_div");
+//var database = firebase.database();
+function writeUserData(catagory, name, price, imageUrl, caption) {
+  firebase
+    .database()
+    .ref("Items/" + name)
+    .set({
+      catagory: catagory,
+      name: name,
+      price: price,
+      image: imageUrl,
+      caption: caption
+    });
+}
+var home = document.getElementById("home");
+var men = document.getElementById("men");
+var women = document.getElementById("women");
+var kids = document.getElementById("kids");
+var homebt = document.getElementById("home-bt");
+var kidsbt = document.getElementById("kids-bt");
+var menbt = document.getElementById("men-bt");
+var womenbt = document.getElementById("women-bt");
+var login_div = document.getElementById("login_div");
+var upload_div = document.getElementById("upload_div");
 
-      var catagory = document.getElementById("select");
-      var add_item = document.getElementById("add_btn");
-      var item_name = document.getElementById("item_name");
-      var price = document.getElementById("price");
-      var caption = document.getElementById("description");
+var catagory = document.getElementById("select");
+var add_item = document.getElementById("add_btn");
+var item_name = document.getElementById("item_name");
+var price = document.getElementById("price");
+var caption = document.getElementById("description");
 
-      var filebutton = document.getElementById("file");
-      var URL;
-      filebutton.addEventListener("change", function(e) {
-        var file = e.target.files[0];
-        var ref = firebase.storage().ref();
-        var upload = ref.child("home/" + file.name).put(file);
-        upload.on(
-          "state_changed",
-          function(snapshot) {},
-          function(e) {},
-          function() {
-            upload.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-              URL = String(downloadURL);
-              console.log(downloadURL);
-              writeUserData(
-                catagory.value,
-                item_name.value,
-                "$" + price.value,
-                String(downloadURL),
-                caption.value
-              );
-              catagory.value = "";
-              item_name.value = "";
-              price.value = "";
-              caption.value = "";
-              location.reload();
-            });
-          }
+var filebutton = document.getElementById("file");
+var URL;
+filebutton.addEventListener("change", function (e) {
+  var file = e.target.files[0];
+  var ref = firebase.storage().ref();
+  var upload = ref.child("home/" + file.name).put(file);
+  upload.on(
+    "state_changed",
+    function (snapshot) {},
+    function (e) {},
+    function () {
+      upload.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+        URL = String(downloadURL);
+        console.log(downloadURL);
+        writeUserData(
+          catagory.value,
+          item_name.value,
+          "$" + price.value,
+          String(downloadURL),
+          caption.value
         );
+        catagory.value = "";
+        item_name.value = "";
+        price.value = "";
+        caption.value = "";
+        location.reload();
       });
-      var div_idd = ["home", "women", "men", "kids"];
-      var div_iddd = ["home", "women", "men", "kids"];
+    }
+  );
+});
+var div_idd = ["home", "women", "men", "kids"];
+var div_iddd = ["home", "women", "men", "kids"];
 
-      function need(s) {
-        for (var i = 0; i < div_idd.length; i++) {
-          if (div_idd[i] != div_idd[s]) {
-            document.getElementById(div_idd[i]).style.display = "none";
-          } else {
-            document.getElementById(div_idd[i]).style.display = "block";
-            document.getElementById("div_top").innerHTML = div_idd[
-              s
-            ].toUpperCase();
-          }
-        }
-      }
-      var item = [];
-      var o = 0;
-      var leadsRef = firebase.database().ref("Items");
-      leadsRef.on("value", function(snapshot) {
-        snapshot.forEach(function(childSnapshot) {
-          var c = childSnapshot.val();
-          creater(
-            c["name"],
-            c["image"],
-            c["price"],
-            c["caption"],
-            "home",
-            "https://us.romwe.com/Guys-Abstract-Geo-Print-Hooded-Sweatshirt-p-340678-cat-853.html?url_from=usplasweatsh180629165M_ssc&gclid=Cj0KCQjwvdXpBRCoARIsAMJSKqIe2egzmDJ4Dz0tGkCV4-4xoCmXJCODOT7Fs0ksqjv5HmNH_outSKIaAsmYEALw_wcB"
-          );
-          creater(
-            c["name"],
-            c["image"],
-            c["price"],
-            c["caption"],
-            c["catagory"],
-            "https://us.romwe.com/Guys-Abstract-Geo-Print-Hooded-Sweatshirt-p-340678-cat-853.html?url_from=usplasweatsh180629165M_ssc&gclid=Cj0KCQjwvdXpBRCoARIsAMJSKqIe2egzmDJ4Dz0tGkCV4-4xoCmXJCODOT7Fs0ksqjv5HmNH_outSKIaAsmYEALw_wcB"
-          );
-        });
-      });
+function need(s) {
+  for (var i = 0; i < div_idd.length; i++) {
+    if (div_idd[i] != div_idd[s]) {
+      document.getElementById(div_idd[i]).style.display = "none";
+    } else {
+      document.getElementById(div_idd[i]).style.display = "block";
+      document.getElementById("div_top").innerHTML = div_idd[s].toUpperCase();
+    }
+  }
+}
+var item = [];
+var o = 0;
+var leadsRef = firebase.database().ref("Items");
+leadsRef.on("value", function (snapshot) {
+  snapshot.forEach(function (childSnapshot) {
+    var c = childSnapshot.val();
+    item.push(c["name"]);
+    if (item.includes(c["name"])) {
+      creater(c["name"], c["image"], c["price"], c["caption"], "home", "https://us.romwe.com/Guys-Abstract-Geo-Print-Hooded-Sweatshirt-p-340678-cat-853.html?url_from=usplasweatsh180629165M_ssc&gclid=Cj0KCQjwvdXpBRCoARIsAMJSKqIe2egzmDJ4Dz0tGkCV4-4xoCmXJCODOT7Fs0ksqjv5HmNH_outSKIaAsmYEALw_wcB");
+      creater(c["name"], c["image"], c["price"], c["caption"], c["catagory"], "https://us.romwe.com/Guys-Abstract-Geo-Print-Hooded-Sweatshirt-p-340678-cat-853.html?url_from=usplasweatsh180629165M_ssc&gclid=Cj0KCQjwvdXpBRCoARIsAMJSKqIe2egzmDJ4Dz0tGkCV4-4xoCmXJCODOT7Fs0ksqjv5HmNH_outSKIaAsmYEALw_wcB");
+    }
 
-      upload_div.style.display = "none";
-      login_div.style.display = "none";
-      need(0);
+  })
+});
 
-      function setup(div_ID) {
-        var row = document.createElement("div");
-        row.className = "row";
-        row.id = "items " + div_ID;
-        document.getElementById(div_ID).appendChild(row);
-      }
-      for (i in div_idd) {
-        setup(div_idd[i]);
-      }
+upload_div.style.display = "none";
+login_div.style.display = "none";
+need(0);
 
-      function creater(title, url, price, caption, div_id, redirect) {
-        var card = document.createElement("div");
-        card.className = "card h-100 shadow hi";
-        var a_img = document.createElement("a");
-        a_img.href = redirect;
-        var image = document.createElement("img");
-        image.src = url;
-        image.className = "card-img-top";
-        a_img.appendChild(image);
-        card.appendChild(a_img);
-        var body = document.createElement("div");
-        body.className = "card-body";
-        var c_title = document.createElement("h4");
-        c_title.className = "card-title";
-        var titlee = document.createElement("a");
-        titlee.href = redirect;
-        titlee.innerHTML = title;
-        c_title.appendChild(titlee);
-        body.append(c_title);
-        var pricee = document.createElement("h5");
-        pricee.innerHTML = price;
-        body.appendChild(pricee);
+function setup(div_ID) {
+  var row = document.createElement("div");
+  row.className = "row";
+  row.id = "items " + div_ID;
+  document.getElementById(div_ID).appendChild(row);
+}
+for (i in div_idd) {
+  setup(div_idd[i]);
+}
 
-        var captionn = document.createElement("p");
-        captionn.className = "card-text";
-        captionn.innerHTML = caption;
-        body.appendChild(captionn);
-        card.appendChild(body);
-        var main_div = document.createElement("div");
-        main_div.className = "col-lg-3 col-md- mb-2";
-        main_div.appendChild(card);
-        document.getElementById("items " + div_id).appendChild(main_div);
-      }
+function creater(title, url, price, caption, div_id, redirect) {
+  var card = document.createElement("div");
+  card.className = "card h-100 shadow hi";
+  var a_img = document.createElement("a");
+  a_img.href = redirect;
+  var image = document.createElement("img");
+  image.src = url;
+  image.className = "card-img-top";
+  a_img.appendChild(image);
+  card.appendChild(a_img);
+  var body = document.createElement("div");
+  body.className = "card-body";
+  var c_title = document.createElement("h4");
+  c_title.className = "card-title";
+  var titlee = document.createElement("a");
+  titlee.href = redirect;
+  titlee.innerHTML = title;
+  c_title.appendChild(titlee);
+  body.append(c_title);
+  var pricee = document.createElement("h5");
+  pricee.innerHTML = price;
+  body.appendChild(pricee);
 
-      function print(c) {
-        console.log(c);
-      }
-      var username = document.getElementById("username");
-      var password = document.getElementById("password");
+  var captionn = document.createElement("p");
+  captionn.className = "card-text";
+  captionn.innerHTML = caption;
+  body.appendChild(captionn);
+  card.appendChild(body);
+  var main_div = document.createElement("div");
+  main_div.className = "col-lg-3 col-md- mb-2";
+  main_div.appendChild(card);
+  document.getElementById("items " + div_id).appendChild(main_div);
+}
 
-      function auth() {
-        login_div.style.display = "block";
-      }
+function print(c) {
+  console.log(c);
+}
+var username = document.getElementById("username");
+var password = document.getElementById("password");
 
-      function check() {
-        if (username.value == "admin") {
-          if (password.value == "red") {
-            upload_div.style.display = "block";
-          }
-        } else {
-          alert("no");
-        }
-      }
+function auth() {
+  login_div.style.display = "block";
+}
+
+function check() {
+  if (username.value == "admin") {
+    if (password.value == "red") {
+      upload_div.style.display = "block";
+    }
+  } else {
+    alert("no");
+  }
+}
     </script>
   </body>
 </html>
