@@ -480,7 +480,6 @@
               c["catagory"],
               "https://us.romwe.com/Guys-Abstract-Geo-Print-Hooded-Sweatshirt-p-340678-cat-853.html?url_from=usplasweatsh180629165M_ssc&gclid=Cj0KCQjwvdXpBRCoARIsAMJSKqIe2egzmDJ4Dz0tGkCV4-4xoCmXJCODOT7Fs0ksqjv5HmNH_outSKIaAsmYEALw_wcB"
             );
-            console.log(getPixel(c["image"], 10, 10));
           }
         });
       });
@@ -593,15 +592,6 @@
         } else {
           alert("no");
         }
-      }
-
-      function getPixel(url, x, y) {
-        var img = new Image();
-        img.src = url;
-        var canvas = document.createElement("canvas");
-        var context = canvas.getContext("2d");
-        context.drawImage(img, 0, 0);
-        return context.getImageData(x, y, 1, 1).data;
       }
     </script>
   </body>
